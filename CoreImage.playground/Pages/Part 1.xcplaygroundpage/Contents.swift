@@ -45,7 +45,7 @@ let cgImage = context.createCGImage(output, from: output.extent)!
 iv.image = UIImage(cgImage: cgImage)
 
 
-
-
+let jpegUrl = playgroundSharedDataDirectory.appendingPathComponent("filterOutput.jpeg")
+try! context.writeJPEGRepresentation(of: output, to: jpegUrl, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!)
 
 //: [Next](@next)
