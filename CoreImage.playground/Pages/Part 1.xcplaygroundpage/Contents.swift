@@ -40,6 +40,9 @@ let iv = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
 iv.contentMode = .scaleAspectFit
 iv.image = uiImage
 
+let context = CIContext()
+let cgImage = context.createCGImage(output, from: output.extent)!
+iv.image = UIImage(cgImage: cgImage)
 
 
 
