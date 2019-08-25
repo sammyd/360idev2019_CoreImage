@@ -16,21 +16,28 @@ let resized = image.transformed(by: CGAffineTransform(scaleX: 0.125, y: 0.125))
 let matteResized = matte.transformed(by: CGAffineTransform(scaleX: 0.25, y: 0.25))
 
 
-let inverseFilter = CIFilter(name: "CIColorInvert", parameters: [
-  "inputImage": matteResized
-])!
+//let inverseFilter = CIFilter(name: "CIColorInvert", parameters: [
+//  "inputImage": matteResized
+//])!
+//
+//// Apply the blur
+//let maskedBlurFilter = CIFilter(name: "CIMaskedVariableBlur", parameters: [
+//  "inputImage": resized,
+//  "inputRadius": 20,
+//  "inputMask": inverseFilter.outputImage!
+//])!
 
-// Apply the blur
-let maskedBlurFilter = CIFilter(name: "CIMaskedVariableBlur", parameters: [
-  "inputImage": resized,
-  "inputRadius": 20,
-  "inputMask": inverseFilter.outputImage!
-])!
+let background = resized
+  .applyingFilter("CIVibrance", parameters: ["inputAmount": -0.8])
+  .applyingFilter("CIDiscBlur", parameters: ["inputRadius": 8])
+  .cropped(to: resized.extent)
+  .applyingFilter("CIVignette", parameters: ["inputIntensity": 0.7, "inputRadius": 20])
+
 
 
 
 // Temporary for display purposes
-let output = maskedBlurFilter.outputImage!
+let output = background
 
 
 
