@@ -47,7 +47,16 @@ extern "C" {
     float redDifference(float4 pixel) {
       return (pixel.r - intensity(pixel)) / (2 * (1 - K_R));
     }
-
+    
+    float4 ycbcrToRgb(float4 pixel) {
+      float y  = pixel.r;
+      float cb = pixel.g;
+      float cr = pixel.b;
+      float blue  = 2 * cb * (1 - K_B) + y;
+      float red   = 2 * cr * (1 - K_R) + y;
+      float green = (y - K_R * red - K_B * blue) / K_G;
+      return float4(red, green, blue, pixel.a);
+    }
 
     // KERNEL
     float4 rgbToYcbcrFilterKernel(sample_t s) {
@@ -55,6 +64,11 @@ extern "C" {
       float cb = blueDifference(s);
       float cr = redDifference(s);
       return float4(y, cb, cr, s.a);
+    }
+    
+    // KERNEL
+    float4 ycbcrToRgbFilterKernel(sample_t s) {
+      return ycbcrToRgb(s);
     }
   }
 }

@@ -52,8 +52,10 @@ class BilateralFilerImageProcessor {
     // TODO
     let filter = CIRgbToYcbcrFilter()
     filter.inputImage = downsized
+    let inverseFilter = CIYcbcrToRgbFilter()
+    inverseFilter.inputImage = filter.outputImage!
     
-    let outputImage = filter.outputImage!
+    let outputImage = inverseFilter.outputImage!
 
     return NSImage(ciImage: outputImage)
   }
