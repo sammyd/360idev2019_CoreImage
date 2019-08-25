@@ -23,20 +23,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-  var imageView: UIImageView!
+  var metalView: MetalRenderView!
   var cameraCapture: CICameraCapture?
 
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
-    imageView = UIImageView(frame: view.bounds)
-    view.addSubview(imageView)
+    metalView = MetalRenderView(frame: view.bounds, device: MTLCreateSystemDefaultDevice())
+    view.addSubview(metalView)
     
     cameraCapture = CICameraCapture(cameraPosition: .back) { (image) in
       guard let image = image else { return }
       
-      let uiImage = UIImage(ciImage: image.transformToOrigin(withSize: self.view.bounds.size))
-      self.imageView.image = uiImage
+      self.metalView.image = image
     }
     
     cameraCapture?.start()
