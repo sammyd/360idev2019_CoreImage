@@ -27,19 +27,19 @@ class BilateralFilerImageProcessor {
   
   var kernelRadius: Int = 5{
     didSet {
-      // TODO
+      filter.kernelRadius = Float(kernelRadius)
     }
   }
   
   var sigmaSpatial: Float = 15 {
     didSet {
-      // TODO
+      filter.sigmaSpatial = sigmaSpatial
     }
   }
   
   var sigmaRange: Float = 0.01 {
     didSet {
-      // TODO
+      filter.sigmaRange = sigmaRange
     }
   }
   
@@ -50,17 +50,47 @@ class BilateralFilerImageProcessor {
     let downsized = ciimage.transformed(by: CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
     
     // TODO
-    let filter = CIRgbToYcbcrFilter()
-    filter.inputImage = downsized
-    let inverseFilter = CIYcbcrToRgbFilter()
-    inverseFilter.inputImage = filter.outputImage!
+    let ycbcrFilter = CIRgbToYcbcrFilter()
+    ycbcrFilter.inputImage = downsized
     
-    let outputImage = inverseFilter.outputImage!
+    filter.inputImage = ycbcrFilter.outputImage
+    
+    let rgbFilter = CIYcbcrToRgbFilter()
+    rgbFilter.inputImage = filter.outputImage
+    
+    guard let outputImage = rgbFilter.outputImage else { return .none }
 
     return NSImage(ciImage: outputImage)
   }
 }
 
 fileprivate class BilateralFilter: CIFilter {
-  // TODO
+  private lazy var kernel: CIKernel = {
+    guard
+      let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
+      let data = try? Data(contentsOf: url) else {
+        fatalError("Unable to get metallib")
+    }
+    
+    guard let kernel = try? CIKernel(functionName: "bilateralFilterKernel", fromMetalLibraryData: data) else {
+      fatalError("Unable to create CIColorKernel from bilateralFilterKernel")
+    }
+    
+    return kernel
+  }()
+  
+  var inputImage: CIImage?
+  var kernelRadius: Float = 13
+  var sigmaSpatial: Float = 15
+  var sigmaRange: Float = 0.1
+
+  override var outputImage: CIImage? {
+    guard let inputImage = inputImage else { return .none }
+    
+    return kernel.apply(extent: inputImage.extent, roiCallback: { (index, rect) -> CGRect in
+      return rect.insetBy(dx: CGFloat(-self.kernelRadius), dy: CGFloat(-self.kernelRadius))
+        .intersection(inputImage.extent)
+      
+    }, arguments: [inputImage, kernelRadius, sigmaSpatial, sigmaRange])
+  }
 }

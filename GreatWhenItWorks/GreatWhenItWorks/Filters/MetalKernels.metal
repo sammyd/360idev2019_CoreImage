@@ -70,5 +70,27 @@ extern "C" {
     float4 ycbcrToRgbFilterKernel(sample_t s) {
       return ycbcrToRgb(s);
     }
+    
+    // KERNEL
+    float4 bilateralFilterKernel(sampler src, float kernelRadius_f, float sigmaSpatial, float sigmaRange) {
+      float4 input = src.sample(src.coord());
+      float3 premultipliedRunningSum = 0;
+      float weightRunningSum = 0;
+      int kernelRadius = int(kernelRadius_f);
+      
+      for (int i = -kernelRadius; i <= kernelRadius; i++) {
+        for (int j = -kernelRadius; j <= kernelRadius; j++) {
+          // On iOS you need / src.size() on the end of the following line.
+          float4 referenceInput = src.sample(src.coord() + float2(i, j));
+          float weight = exp ( - (i * i + j * j) / (2 * sigmaSpatial * sigmaSpatial)
+                              - pow((input.r - referenceInput.r), 2.0) / (2 * sigmaRange * sigmaRange));
+          weightRunningSum += weight;
+          premultipliedRunningSum += weight * referenceInput.rgb;
+        }
+      }
+      
+      return float4(premultipliedRunningSum / weightRunningSum, input.a);
+    }
+
   }
 }
