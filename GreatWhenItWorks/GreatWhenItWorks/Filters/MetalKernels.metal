@@ -23,6 +23,10 @@
 #include <metal_stdlib>
 using namespace metal;
 
+#define K_R 0.2126
+#define K_G 0.7152
+#define K_B 0.0722
+
 #include <CoreImage/CoreImage.h>
 
 extern "C" {
@@ -30,6 +34,16 @@ extern "C" {
     // KERNEL
     float4 passthroughFilterKernel(sample_t s) {
       return s;
+    }
+    
+    float intensity(float4 pixel) {
+      return K_R * pixel.r + K_G * pixel.g + K_B * pixel.b;
+    }
+
+    // KERNEL
+    float4 rgbToYcbcrFilterKernel(sample_t s) {
+      float y = intensity(s);
+      return float4(y, y, y, s.a);
     }
   }
 }

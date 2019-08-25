@@ -30,8 +30,8 @@ class CIRgbToYcbcrFilter: CIFilter {
         fatalError("Unable to get metallib")
     }
     
-    guard let kernel = try? CIColorKernel(functionName: "TODO", fromMetalLibraryData: data) else {
-      fatalError("Unable to create CIColorKernel from TODO")
+    guard let kernel = try? CIColorKernel(functionName: "rgbToYcbcrFilterKernel", fromMetalLibraryData: data) else {
+      fatalError("Unable to create CIColorKernel from rgbToYcbcrFilterKernel")
     }
     
     return kernel

@@ -50,7 +50,7 @@ class BilateralFilerImageProcessor {
     let downsized = ciimage.transformed(by: CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
     
     // TODO
-    let filter = PassthroughFilter()
+    let filter = CIRgbToYcbcrFilter()
     filter.inputImage = downsized
     
     let outputImage = filter.outputImage!
