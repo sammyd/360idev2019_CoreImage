@@ -10,8 +10,10 @@ let depthMap = CIImage(contentsOf: url, options: [
   CIImageOption.auxiliaryDepth: true
 ])!
 
+let vibranceFilter = CIFilter(name: "CIVibrance", parameters: ["inputAmount": 0.9, "inputImage": image])!
 
-let uiImage = UIImage(ciImage: depthMap)
+
+let uiImage = UIImage(ciImage: vibranceFilter.outputImage!)
 let iv = UIImageView(image: uiImage)
 PlaygroundPage.current.liveView = iv
 PlaygroundPage.current.needsIndefiniteExecution = true
