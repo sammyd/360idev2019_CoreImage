@@ -39,11 +39,22 @@ extern "C" {
     float intensity(float4 pixel) {
       return K_R * pixel.r + K_G * pixel.g + K_B * pixel.b;
     }
+    
+    float blueDifference(float4 pixel) {
+      return (pixel.b - intensity(pixel)) / (2 * (1 - K_B));
+    }
+    
+    float redDifference(float4 pixel) {
+      return (pixel.r - intensity(pixel)) / (2 * (1 - K_R));
+    }
+
 
     // KERNEL
     float4 rgbToYcbcrFilterKernel(sample_t s) {
       float y = intensity(s);
-      return float4(y, y, y, s.a);
+      float cb = blueDifference(s);
+      float cr = redDifference(s);
+      return float4(y, cb, cr, s.a);
     }
   }
 }
