@@ -13,7 +13,9 @@ let depthMap = CIImage(contentsOf: url, options: [
 let vibranceFilter = CIFilter(name: "CIVibrance", parameters: ["inputAmount": 0.9, "inputImage": image])!
 let gloomFilter = CIFilter(name: "CIGloom", parameters: ["inputRadius": 10, "inputIntensity": 0.7, "inputImage": vibranceFilter.outputImage!])!
 
-let uiImage = UIImage(ciImage: gloomFilter.outputImage!)
+let output = gloomFilter.outputImage!.cropped(to: image.extent)
+
+let uiImage = UIImage(ciImage: output)
 let iv = UIImageView(image: uiImage)
 PlaygroundPage.current.liveView = iv
 PlaygroundPage.current.needsIndefiniteExecution = true
