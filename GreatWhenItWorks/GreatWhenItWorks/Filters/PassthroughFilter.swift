@@ -20,45 +20,33 @@
  * THE SOFTWARE.
  */
 
-import Cocoa
+import CoreImage
 
-class BilateralFilerImageProcessor {
-  private let filter = BilateralFilter()
-  
-  var kernelRadius: Int = 5{
-    didSet {
-      // TODO
+class PassthroughFilter: CIFilter {
+  private lazy var kernel: CIKernel = {
+    guard
+      let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
+      let data = try? Data(contentsOf: url) else {
+        fatalError("Unable to load metallib")
     }
-  }
-  
-  var sigmaSpatial: Float = 15 {
-    didSet {
-      // TODO
+    
+    guard let kernel = try? CIColorKernel(functionName: "passthroughFilterKernel", fromMetalLibraryData: data) else {
+      fatalError("Unable to create the CIColorKernel for passthoughFilterKernel")
     }
+    
+    return kernel
+  }()
+  
+  var inputImage: CIImage?
+  
+  override var outputImage: CIImage? {
+    guard let inputImage = inputImage else { return .none }
+    
+    return kernel.apply(extent: inputImage.extent,
+                        roiCallback: { (index, rect) -> CGRect in
+                          return rect
+    }, arguments: [inputImage])
   }
   
-  var sigmaRange: Float = 0.01 {
-    didSet {
-      // TODO
-    }
-  }
-  
-  func process(image: NSImage) -> NSImage? {
-    guard let ciimage = CIImage(nsImage: image) else { return .none }
-    
-    let scaleFactor = 600 / max(ciimage.extent.width, ciimage.extent.height);
-    let downsized = ciimage.transformed(by: CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
-    
-    // TODO
-    let filter = PassthroughFilter()
-    filter.inputImage = downsized
-    
-    let outputImage = filter.outputImage!
-
-    return NSImage(ciImage: outputImage)
-  }
 }
 
-fileprivate class BilateralFilter: CIFilter {
-  // TODO
-}

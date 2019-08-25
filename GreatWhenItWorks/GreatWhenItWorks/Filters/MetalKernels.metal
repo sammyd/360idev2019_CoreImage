@@ -20,45 +20,16 @@
  * THE SOFTWARE.
  */
 
-import Cocoa
+#include <metal_stdlib>
+using namespace metal;
 
-class BilateralFilerImageProcessor {
-  private let filter = BilateralFilter()
-  
-  var kernelRadius: Int = 5{
-    didSet {
-      // TODO
+#include <CoreImage/CoreImage.h>
+
+extern "C" {
+  namespace coreimage {
+    // KERNEL
+    float4 passthroughFilterKernel(sample_t s) {
+      return s;
     }
   }
-  
-  var sigmaSpatial: Float = 15 {
-    didSet {
-      // TODO
-    }
-  }
-  
-  var sigmaRange: Float = 0.01 {
-    didSet {
-      // TODO
-    }
-  }
-  
-  func process(image: NSImage) -> NSImage? {
-    guard let ciimage = CIImage(nsImage: image) else { return .none }
-    
-    let scaleFactor = 600 / max(ciimage.extent.width, ciimage.extent.height);
-    let downsized = ciimage.transformed(by: CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
-    
-    // TODO
-    let filter = PassthroughFilter()
-    filter.inputImage = downsized
-    
-    let outputImage = filter.outputImage!
-
-    return NSImage(ciImage: outputImage)
-  }
-}
-
-fileprivate class BilateralFilter: CIFilter {
-  // TODO
 }

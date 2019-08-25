@@ -17,6 +17,8 @@
 		229BE0F9225DC2D200BA640C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 229BE0F8225DC2D200BA640C /* Assets.xcassets */; };
 		229BE0FC225DC2D200BA640C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 229BE0FA225DC2D200BA640C /* Main.storyboard */; };
 		229BE109225DE62D00BA640C /* BilateralFilterImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229BE108225DE62D00BA640C /* BilateralFilterImageProcessor.swift */; };
+		22A91D9023124AB60033AEE3 /* MetalKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 22A91D8F23124AB60033AEE3 /* MetalKernels.metal */; };
+		22A91D9223124B8D0033AEE3 /* PassthroughFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A91D9123124B8D0033AEE3 /* PassthroughFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		229BE0FE225DC2D200BA640C /* GreatWhenItWorks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GreatWhenItWorks.entitlements; sourceTree = "<group>"; };
 		229BE108225DE62D00BA640C /* BilateralFilterImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilateralFilterImageProcessor.swift; sourceTree = "<group>"; };
 		22A91D8E231240310033AEE3 /* UsefulBits.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = UsefulBits.markdown; sourceTree = "<group>"; };
+		22A91D8F23124AB60033AEE3 /* MetalKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MetalKernels.metal; sourceTree = "<group>"; };
+		22A91D9123124B8D0033AEE3 /* PassthroughFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,8 @@
 				226847F7225FA7EB00312986 /* CIYcbcrToRgbFilter.swift */,
 				226847F9225FA7FB00312986 /* CIRgbToYCbCrFilter.swift */,
 				22A91D8E231240310033AEE3 /* UsefulBits.markdown */,
+				22A91D8F23124AB60033AEE3 /* MetalKernels.metal */,
+				22A91D9123124B8D0033AEE3 /* PassthroughFilter.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -190,6 +196,8 @@
 				226847FC225FACCA00312986 /* NSImage+CIImage.swift in Sources */,
 				226847FE225FADD500312986 /* CIImage+NSImage.swift in Sources */,
 				229BE0F7225DC2D100BA640C /* ViewController.swift in Sources */,
+				22A91D9023124AB60033AEE3 /* MetalKernels.metal in Sources */,
+				22A91D9223124B8D0033AEE3 /* PassthroughFilter.swift in Sources */,
 				229BE0F5225DC2D100BA640C /* AppDelegate.swift in Sources */,
 				226847FA225FA7FB00312986 /* CIRgbToYCbCrFilter.swift in Sources */,
 				229BE109225DE62D00BA640C /* BilateralFilterImageProcessor.swift in Sources */,
@@ -338,6 +346,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.GreatWhenItWorks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -357,6 +367,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.GreatWhenItWorks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

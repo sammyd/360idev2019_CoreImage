@@ -66,7 +66,7 @@ class ViewController: NSViewController {
   private func processImage() {
     guard let image = beforeImageView.image else { return }
     
-    afterImageView.image = image
+    afterImageView.image = imageProcessor.process(image: image)
   }
 }
 
