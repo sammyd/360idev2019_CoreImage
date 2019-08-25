@@ -27,7 +27,16 @@ let matteResized = matte.transformed(by: CGAffineTransform(scaleX: 0.25, y: 0.25
 //  "inputMask": inverseFilter.outputImage!
 //])!
 
-let background = resized
+let sunbeamFilter = CIFilter(name: "CISunbeamsGenerator", parameters: [
+  "inputSunRadius": 25,
+  "inputStriationsStrength": 0.5
+])!
+let sun = sunbeamFilter.outputImage!
+                       .transformed(by: CGAffineTransform(translationX: -20, y: 300))
+
+let withSun = sun.applyingFilter("CILightenBlendMode", parameters: ["inputBackgroundImage": resized])
+
+let background = withSun
   .applyingFilter("CIVibrance", parameters: ["inputAmount": -0.8])
   .applyingFilter("CIDiscBlur", parameters: ["inputRadius": 8])
   .cropped(to: resized.extent)
