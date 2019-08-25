@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		223F2E22230DA0BA0069746D /* CIImage+TransformExtent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F2E21230DA0BA0069746D /* CIImage+TransformExtent.swift */; };
+		223F2E28230DD4D70069746D /* CICameraCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F2E27230DD4D70069746D /* CICameraCapture.swift */; };
 		22A2DCEC22FB44F900F59463 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2DCEB22FB44F900F59463 /* AppDelegate.swift */; };
 		22A2DCEE22FB44F900F59463 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2DCED22FB44F900F59463 /* SceneDelegate.swift */; };
 		22A2DCF022FB44F900F59463 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2DCEF22FB44F900F59463 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		223F2E21230DA0BA0069746D /* CIImage+TransformExtent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+TransformExtent.swift"; sourceTree = "<group>"; };
+		223F2E27230DD4D70069746D /* CICameraCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICameraCapture.swift; sourceTree = "<group>"; };
 		22A2DCE822FB44F900F59463 /* RealtimeFiltering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealtimeFiltering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A2DCEB22FB44F900F59463 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22A2DCED22FB44F900F59463 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				223F2E21230DA0BA0069746D /* CIImage+TransformExtent.swift */,
+				223F2E27230DD4D70069746D /* CICameraCapture.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				22A2DCF022FB44F900F59463 /* ViewController.swift in Sources */,
 				22A2DCEC22FB44F900F59463 /* AppDelegate.swift in Sources */,
 				223F2E22230DA0BA0069746D /* CIImage+TransformExtent.swift in Sources */,
+				223F2E28230DD4D70069746D /* CICameraCapture.swift in Sources */,
 				22A2DCEE22FB44F900F59463 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,6 +24,7 @@ import UIKit
 
 class ViewController: UIViewController {
   var imageView: UIImageView!
+  var cameraCapture: CICameraCapture?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,7 +32,14 @@ class ViewController: UIViewController {
     imageView = UIImageView(frame: view.bounds)
     view.addSubview(imageView)
     
-    // TODO
+    cameraCapture = CICameraCapture(cameraPosition: .back) { (image) in
+      guard let image = image else { return }
+      
+      let uiImage = UIImage(ciImage: image.transformToOrigin(withSize: self.view.bounds.size))
+      self.imageView.image = uiImage
+    }
+    
+    cameraCapture?.start()
   }
 }
 
