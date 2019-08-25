@@ -15,6 +15,26 @@ let gloomFilter = CIFilter(name: "CIGloom", parameters: ["inputRadius": 10, "inp
 
 let output = gloomFilter.outputImage!.cropped(to: image.extent)
 
+timeCode {
+  let image1 = vibrance(image)
+  UIImageView(image: UIImage(ciImage: image1))
+  let image2 = gloom(image1).cropped(to: image.extent)
+  UIImageView(image: UIImage(ciImage: image2))
+  let image3 = vignette(image2)
+  UIImageView(image: UIImage(ciImage: image3))
+}
+
+timeCode {
+  let out = filterChain(image)
+  UIImageView(image: UIImage(ciImage: out))
+}
+
+
+
+
+
+
+
 let uiImage = UIImage(ciImage: output)
 let iv = UIImageView(image: uiImage)
 PlaygroundPage.current.liveView = iv
