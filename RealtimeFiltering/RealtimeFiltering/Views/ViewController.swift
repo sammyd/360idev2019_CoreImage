@@ -21,6 +21,8 @@
  */
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ViewController: UIViewController {
   var metalView: MetalRenderView!
@@ -35,7 +37,14 @@ class ViewController: UIViewController {
     cameraCapture = CICameraCapture(cameraPosition: .back) { (image) in
       guard let image = image else { return }
       
-      self.metalView.image = image
+      let filter = CIFilter.thermal()
+      filter.inputImage = image
+      
+      let blur = CIFilter.gaussianBlur()
+      blur.radius = 25
+      blur.inputImage = filter.outputImage
+      
+      self.metalView.image = blur.outputImage?.cropped(to: image.extent)
     }
     
     cameraCapture?.start()
