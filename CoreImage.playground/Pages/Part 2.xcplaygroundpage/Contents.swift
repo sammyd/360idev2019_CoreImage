@@ -33,11 +33,18 @@ let background = resized
   .cropped(to: resized.extent)
   .applyingFilter("CIVignette", parameters: ["inputIntensity": 0.7, "inputRadius": 20])
 
+let foreground = resized
+  .applyingFilter("CIVibrance", parameters: ["inputAmount": 0.7])
 
+let compositeFilter = CIFilter(name: "CIBlendWithMask", parameters: [
+    "inputImage": foreground,
+    "inputBackgroundImage": background,
+    "inputMaskImage": matteResized
+  ])!
 
 
 // Temporary for display purposes
-let output = background
+let output = compositeFilter.outputImage!
 
 
 
